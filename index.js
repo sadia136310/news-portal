@@ -18,7 +18,7 @@ const loadDataDisplay = (datas) => {
              <h5 onclick="loadDataDetails()">${category_name}</h5>
              
         `;
-        newsContainer.appendChild(newsDiv)
+        newsContainer.appendChild(newsDiv);
 
     });
 }
@@ -33,7 +33,7 @@ const loadDataDetailsDisplay = (datas) => {
     // console.log(datas);
     const cardContainer = document.getElementById('card-container');
     datas.forEach(data => {
-        console.log(data);
+        // console.log(data);
 
         const { thumbnail_url, title, details, image_url, author, total_view } = data
         cardDiv = document.createElement('div');
@@ -72,7 +72,7 @@ const loadDataDetailsDisplay = (datas) => {
 
                           <div  class="p-3">
                            
-                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"    data-bs-target="#exampleModal">
+                             <button onclick="modalDetails()" type="button" class="btn btn-primary" data-bs-toggle="modal"    data-bs-target="#exampleModal">
                        See Details
                        </button>
                           </div>  
@@ -87,7 +87,44 @@ const loadDataDetailsDisplay = (datas) => {
 }
 const modalDetails = () => {
 
+    url = 'https://openapi.programming-hero.com/api/news/0282e0e58a5c404fbd15261f11c2ab6a'
+    fetch(url)
+        .then(response => response.json())
+        .then(data => modalDetailsDisplay(data.data[0]))
 }
 
-loadDataDetails();
+const modalDetailsDisplay = (datas) => {
+    console.log(datas);
+
+
+
+    const modalSection = document.getElementById('modal-section');
+    const { thumbnail_url, title, details, image_url, author, total_view } = datas;
+    const modalDiv = document.createElement('div');
+    modalDiv.innerHTML = `
+    
+     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">${title}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <p class="card-text fw-bold">Author name: ${author.name === null ? author.name('not found') : author.name}</p>
+         <p class="card-text fw-bold">Author name: ${total_view}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    `
+    modalSection.appendChild(modalDiv)
+
+}
+loadDataDetails('');
 dataLoad();
