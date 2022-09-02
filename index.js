@@ -15,23 +15,26 @@ const loadDataDisplay = (datas) => {
         const { category_name } = data;
         const newsDiv = document.createElement('div');
         newsDiv.innerHTML = `
-             <h5 onclick="loadDataDetails()">${category_name}</h5>
-             
+             <h5 onclick="loadDataDetails('${data.category_id}')">${category_name}</h5>
+
         `;
         newsContainer.appendChild(newsDiv);
 
     });
 }
-const loadDataDetails = () => {
-    url = 'https://openapi.programming-hero.com/api/news/category/01'
+
+const loadDataDetails = (id) => {
+    // console.log(id);
+    url = `https://openapi.programming-hero.com/api/news/category/${id}`
     fetch(url)
         .then(response => response.json())
         .then(data => loadDataDetailsDisplay(data.data))
 }
 
 const loadDataDetailsDisplay = (datas) => {
-    // console.log(datas);
+    console.log(datas);
     const cardContainer = document.getElementById('card-container');
+    cardContainer.innerHTML = '';
     datas.forEach(data => {
         // console.log(data);
 
@@ -48,17 +51,14 @@ const loadDataDetailsDisplay = (datas) => {
                             <h5 class="card-title">${title}</h5>
                             <p class="card-text">${details}</p>
                              
-
                            <div class="d-flex g-5">
                              <div>
                              <img src="${author.img}" class="img-fluid rounded-circle" style="width: 6rem;"alt="...">
                              </div>
-
                             <div class="p-3">
                              <p class="card-text fw-bold"> ${author.name}</p>
                              <p class="card-text text-muted"> ${author.published_date}</p>
                             </div>
-
                          <div  class="p-3">
                           <p class="card-text fw-bold">view : ${total_view}</p>
                          </div>
@@ -69,7 +69,6 @@ const loadDataDetailsDisplay = (datas) => {
                          <i class="fa-regular fa-star text-warning"></i>
                          <i class="fa-regular fa-star text-warning"></i>
                          </div>
-
                           <div  class="p-3">
                            
                              <button onclick="modalDetails()" type="button" class="btn btn-primary" data-bs-toggle="modal"    data-bs-target="#exampleModal">
@@ -85,6 +84,7 @@ const loadDataDetailsDisplay = (datas) => {
         cardContainer.appendChild(cardDiv);
     })
 }
+
 const modalDetails = () => {
 
     url = 'https://openapi.programming-hero.com/api/news/0282e0e58a5c404fbd15261f11c2ab6a'
@@ -121,10 +121,9 @@ const modalDetailsDisplay = (datas) => {
     </div>
   </div>
 </div>
-
     `
     modalSection.appendChild(modalDiv)
 
 }
-loadDataDetails('');
+// loadDataDetailsDisplay()
 dataLoad();
