@@ -16,21 +16,25 @@ const loadDataDisplay = (datas) => {
         const { category_name } = data;
         const newsDiv = document.createElement('div');
         newsDiv.innerHTML = `
+        
              <h5 onclick="loadDataDetails('${data.category_id}')"> ${category_name} </h5>
              
         `;
 
         newsContainer.appendChild(newsDiv);
-        spiner(true);
+        spiner();
     });
 }
 
 const spiner = isLoading => {
     const loaderSection = document.getElementById('loader');
+    console.log(loaderSection)
     if (isLoading) {
+        loaderSection.classList.remove('d-none');
+    }
+    else {
         loaderSection.classList.add('d-none');
     }
-
 }
 const loadDataDetails = (id) => {
     // console.log(id);
@@ -113,6 +117,7 @@ const loadDataDetailsDisplay = (datas) => {
             </div>
         `;
         cardContainer.appendChild(cardDiv);
+        spiner(false);
     })
 }
 
@@ -129,6 +134,7 @@ const modalDetails = (item) => {
 
 const modalDetailsDisplay = (datas) => {
     // console.log(datas);
+
     const modalSection = document.getElementById('modal-Section');
     modalSection.innerHTML = '';
 
@@ -138,10 +144,10 @@ const modalDetailsDisplay = (datas) => {
         const modalDiv = document.createElement('div');
         modalDiv.innerHTML = `
 
-        
-      <img src="${thumbnail_url}" class="img-fluid rounded-start" alt="...">
-         <p class="card-text fw-bold">Author name: ${author.name === null ? 'name not found ' : author.name}</p>
-         <p class="card-text fw-bold">view: ${total_view === 0 ? 'not found' : total_view}</p>
+         <h6 class="card-text fw-bold p-3">title: ${title}</h6>
+      <img src="${thumbnail_url}" class="img-fluid rounded-start p-5" alt="...">
+         <p class="card-text fw-bold ps-3">Author name: ${author.name === null ? 'name not found ' : author.name}</p>
+         <p class="card-text fw-bold ps-3">view: ${total_view === 0 ? 'not found' : total_view}</p>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
