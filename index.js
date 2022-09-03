@@ -70,7 +70,7 @@ const loadDataDetailsDisplay = (datas) => {
                          </div>
                           <div  class="p-3">
                            
-                             <button onclick="modalDetails('${data.category_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                             <button onclick="modalDetails('${data._id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                        See Details
                        </button>
                           </div>
@@ -84,9 +84,9 @@ const loadDataDetailsDisplay = (datas) => {
     })
 }
 
-const modalDetails = (id) => {
+const modalDetails = (item) => {
 
-    url = `https://openapi.programming-hero.com/api/news/category/${id}`
+    url = `https://openapi.programming-hero.com/api/news/${item}`
 
     fetch(url)
         .then(response => response.json())
@@ -94,7 +94,7 @@ const modalDetails = (id) => {
 }
 
 const modalDetailsDisplay = (datas) => {
-    console.log(datas);
+    // console.log(datas);
     const modalSection = document.getElementById('modal-Section');
     modalSection.innerHTML = '';
 
@@ -106,12 +106,11 @@ const modalDetailsDisplay = (datas) => {
       <img src="${thumbnail_url}" class="img-fluid rounded-start" alt="...">
          <p class="card-text fw-bold">Author name: ${author.name}</p>
          <p class="card-text fw-bold">Author name: ${total_view}</p>
-   
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        
-      </div>
 
+      </div>
     `;
         modalSection.appendChild(modalDiv);
     });
