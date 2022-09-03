@@ -17,13 +17,21 @@ const loadDataDisplay = (datas) => {
         const newsDiv = document.createElement('div');
         newsDiv.innerHTML = `
              <h5 onclick="loadDataDetails('${data.category_id}')"> ${category_name} </h5>
+             
         `;
-        newsContainer.appendChild(newsDiv);
 
+        newsContainer.appendChild(newsDiv);
+        spiner(true);
     });
 }
 
+const spiner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if (isLoading) {
+        loaderSection.classList.add('d-none');
+    }
 
+}
 const loadDataDetails = (id) => {
     // console.log(id);
     url = `https://openapi.programming-hero.com/api/news/category/${id}`
@@ -74,9 +82,9 @@ const loadDataDetailsDisplay = (datas) => {
                             <h5 class="card-title">${title}</h5>
                             <p class="card-text">${details.length > 400 ? details.slice(0, 400) + '...' : details}</p>
                              
-                           <div class="d-flex g-5">
+                           <div class="d-lg-flex">
                              <div>
-                             <img src="${author.img}" class="img-fluid rounded-circle" style="width: 6rem;"alt="...">
+                             <img src="${author.img}" class="img-fluid rounded-circle" style="width: 8rem;" alt="...">
                              </div>
                             <div class="p-3">
                              <p class="card-text fw-bold"> ${author.name}</p>
@@ -85,8 +93,8 @@ const loadDataDetailsDisplay = (datas) => {
                          <div  class="p-3">
                           <p class="card-text fw-bold"><i class="fa-solid fa-eye"></i> ${rating.number}</p>
                          </div>
-                          <div  class="p-3">
-                         <i class="fa-solid fa-star text-warning "></i>
+                          <div class="p-3">
+                         <i class="fa-solid fa-star text-warning"></i>
                          <i class="fa-regular fa-star text-warning"></i>
                          <i class="fa-regular fa-star text-warning"></i>
                          <i class="fa-regular fa-star text-warning"></i>
