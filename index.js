@@ -16,7 +16,6 @@ const loadDataDisplay = (datas) => {
         const newsDiv = document.createElement('div');
         newsDiv.innerHTML = `
              <h5 onclick="loadDataDetails('${data.category_id}')">${category_name}</h5>
-
         `;
         newsContainer.appendChild(newsDiv);
 
@@ -49,7 +48,7 @@ const loadDataDetailsDisplay = (datas) => {
                     <div class="col-lg-9 col-sm-6">
                         <div class="card-body">
                             <h5 class="card-title">${title}</h5>
-                            <p class="card-text">${details}</p>
+                            <p class="card-text">${details.length > 400 ? details.slice(0, 400) + '...' : details}</p>
                              
                            <div class="d-flex g-5">
                              <div>
@@ -71,10 +70,10 @@ const loadDataDetailsDisplay = (datas) => {
                          </div>
                           <div  class="p-3">
                            
-                             <button onclick="modalDetails()" type="button" class="btn btn-primary" data-bs-toggle="modal"    data-bs-target="#exampleModal">
+                             <button onclick="modalDetails('${data.category_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                        See Details
                        </button>
-                          </div>  
+                          </div>
                           </div>
                         </div>
                     </div>
@@ -85,44 +84,37 @@ const loadDataDetailsDisplay = (datas) => {
     })
 }
 
-const modalDetails = () => {
+const modalDetails = (id) => {
 
-    url = 'https://openapi.programming-hero.com/api/news/0282e0e58a5c404fbd15261f11c2ab6a'
+    url = `https://openapi.programming-hero.com/api/news/category/${id}`
+
     fetch(url)
         .then(response => response.json())
-        .then(data => modalDetailsDisplay(data.data[0]))
+        .then(data => modalDetailsDisplay(data.data))
 }
 
 const modalDetailsDisplay = (datas) => {
     console.log(datas);
+    const modalSection = document.getElementById('modal-Section');
+    modalSection.innerHTML = '';
 
+    datas.forEach(data => {
+        const { thumbnail_url, title, details, image_url, author, total_view } = data
 
-
-    const modalSection = document.getElementById('modal-section');
-    const { thumbnail_url, title, details, image_url, author, total_view } = datas;
-    const modalDiv = document.createElement('div');
-    modalDiv.innerHTML = `
-    
-     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">${title}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-         <p class="card-text fw-bold">Author name: ${author.name === null ? author.name('not found') : author.name}</p>
+        const modalDiv = document.createElement('div');
+        modalDiv.innerHTML = `
+      <img src="${thumbnail_url}" class="img-fluid rounded-start" alt="...">
+         <p class="card-text fw-bold">Author name: ${author.name}</p>
          <p class="card-text fw-bold">Author name: ${total_view}</p>
-      </div>
+   
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         
       </div>
-    </div>
-  </div>
-</div>
-    `
-    modalSection.appendChild(modalDiv)
+
+    `;
+        modalSection.appendChild(modalDiv);
+    });
 
 }
 // loadDataDetailsDisplay()
