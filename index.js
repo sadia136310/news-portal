@@ -99,13 +99,13 @@ const modalDetailsDisplay = (datas) => {
     modalSection.innerHTML = '';
 
     datas.forEach(data => {
-        const { thumbnail_url, title, details, image_url, author, total_view } = data
+        const { thumbnail_url, author, total_view } = data
 
         const modalDiv = document.createElement('div');
         modalDiv.innerHTML = `
       <img src="${thumbnail_url}" class="img-fluid rounded-start" alt="...">
-         <p class="card-text fw-bold">Author name: ${author.name}</p>
-         <p class="card-text fw-bold">Author name: ${total_view}</p>
+         <p class="card-text fw-bold">Author name: ${author.name === null ? 'name not found ' : author.name}</p>
+         <p class="card-text fw-bold">view: ${total_view === 0 ? 'not found' : total_view}</p>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
