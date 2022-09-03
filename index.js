@@ -6,7 +6,6 @@ const dataLoad = () => {
         .catch(error => console.log(error))
 }
 const loadDataDisplay = (datas) => {
-
     // console.log(datas);
 
     const newsContainer = document.getElementById('news-container');
@@ -16,15 +15,18 @@ const loadDataDisplay = (datas) => {
         const { category_name } = data;
         const newsDiv = document.createElement('div');
         newsDiv.innerHTML = `
-        
+
              <h5 onclick="loadDataDetails('${data.category_id}')"> ${category_name} </h5>
-             
+            
         `;
 
         newsContainer.appendChild(newsDiv);
-        spiner();
+
     });
 }
+document.getElementById('news-container').addEventListener('click', function () {
+    spiner(true);
+})
 
 const spiner = isLoading => {
     const loaderSection = document.getElementById('loader');
@@ -47,7 +49,7 @@ const loadDataDetails = (id) => {
 
 
 const loadDataDetailsDisplay = (datas) => {
-    console.log(datas);
+    // console.log(datas);
 
     datas.sort((a, b) => {
         return b.rating.number - a.rating.number;
