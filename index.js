@@ -50,7 +50,9 @@ const loadDataDetails = (id) => {
 
 const loadDataDetailsDisplay = (datas) => {
     // console.log(datas);
-
+    if (datas.length === 0) {
+        spiner(false)
+    }
     datas.sort((a, b) => {
         return b.rating.number - a.rating.number;
     });
@@ -93,8 +95,8 @@ const loadDataDetailsDisplay = (datas) => {
                              <img src="${author.img}" class="img-fluid rounded-circle" style="width: 8rem;" alt="...">
                              </div>
                             <div class="p-3">
-                             <p class="card-text fw-bold"> ${author.name}</p>
-                             <p class="card-text text-muted"> ${author.published_date}</p>
+                             <p class="card-text fw-bold"> ${author.name ? author.name : 'name not found'}</p>
+                             <p class="card-text text-muted"> ${author.published_date ? author.published_date : 'not found'}</p>
                             </div>
                          <div  class="p-3">
                           <p class="card-text fw-bold"><i class="fa-solid fa-eye"></i> ${rating.number}</p>
@@ -148,8 +150,8 @@ const modalDetailsDisplay = (datas) => {
 
          <h6 class="card-text fw-bold p-3">title: ${title}</h6>
       <img src="${thumbnail_url}" class="img-fluid rounded-start p-5" alt="...">
-         <p class="card-text fw-bold ps-3">Author name: ${author.name === null ? 'name not found ' : author.name}</p>
-         <p class="card-text fw-bold ps-3">view: ${total_view === 0 ? 'not found' : total_view}</p>
+         <p class="card-text fw-bold ps-3">Author name: ${author.name ? author.name : 'name not found'}</p>
+         <p class="card-text fw-bold ps-3">view: ${total_view ? total_view : 'not found'}</p>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
